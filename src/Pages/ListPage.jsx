@@ -124,7 +124,7 @@ export default function ListPage() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-<div className='flex flex-row flex-wrap w-full gap-3 justify-center p-4 text-center'>
+      <div className='grid grid-cols-2 gap-3 p-4 text-center sm:flex sm:flex-wrap sm:justify-center'>
         {mangas.map((m) => (
         <div className='flex flex-col justify-start items-center max-w-[180px] w-full relative'>
             <div className='w-full h-[250px]'>
@@ -137,7 +137,7 @@ export default function ListPage() {
             <p className='font-[Inter] text-sm/5 text-gray-900'>{m.name}</p>
             <p className='font-[Inter] text-black font-bold bg-white px-1 rounded-lg text-[10px] absolute top-1 right-1'>{m.completedChapters} / {m.totalChapters}</p>
             <p className='absolute text-black font-bold text-[9px] p-[2px] px-[4px] left-1 rounded-lg bg-white top-1'>{m.releaseStatus}</p>
-            <div className="text-[13px] flex gap-1 items-center bg-white absolute top-[225px] right-[-9px] px-1 pr-3 rounded-md">
+            <div className="text-[13px] flex gap-1 items-center bg-white absolute top-[200px] sm:top-[225px] right-[-9px] px-1 pr-3 rounded-md">
               {m.status === 'Reading' && (
                 <>
                   <FaBook className="text-blue-500" />
