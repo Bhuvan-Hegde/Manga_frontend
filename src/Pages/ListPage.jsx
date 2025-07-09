@@ -192,7 +192,7 @@ export default function ListPage() {
 
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl w-[95%] max-w-md shadow-lg relative">
+          <div className="bg-white p-6 max-h-[90%] rounded-xl w-[95%] max-w-md shadow-lg relative">
             <button onClick={() => setShowForm(false)} className="absolute top-2 right-3 text-2xl text-gray-600 hover:text-black">×</button>
             <h2 className="text-2xl font-bold mb-4 text-center">{isEdit ? 'Edit Manga' : 'Create Manga'}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -230,15 +230,17 @@ export default function ListPage() {
                 </select>
               </div>
               <div>
-                <label className="block font-medium">Cover Image</label>
+                {!isEdit && (
+                  <div>
+                                  <label className="block font-medium">Cover Image</label>
                 <input type="file" className="w-full border rounded p-2" accept="image/*" onChange={(e) => {
                   const file = e.target.files[0];
                   setFormData({ ...formData, coverImage: file });
                   setImagePreview(URL.createObjectURL(file));
                 }} />
-                {imagePreview && (
-                  <img src={imagePreview} alt="Preview" className="mt-2 w-full h-40 object-cover rounded" />
+                  </div>
                 )}
+         
               </div>
 
           
