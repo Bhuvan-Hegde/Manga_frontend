@@ -29,7 +29,7 @@ export default function ListPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showfilter, setShowFilter] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
-
+  const [activeCommentId, setActiveCommentId] = useState(null);
 
   const fetchMangas = async () => {
     try {
@@ -129,7 +129,9 @@ const filteredMangas = mangas.filter((m) => {
   return nameMatch && statusMatch;
 });
 
-
+const toggleComment = (id) => {
+  setActiveCommentId(prevId => (prevId === id ? null : id));
+};
 
   return (
     <div className="p-6 w-[100vw] h-full min-h-screen bg-darkbg flex flex-col items-center relative">
@@ -158,12 +160,17 @@ const filteredMangas = mangas.filter((m) => {
       <div className='grid grid-cols-2 gap-3 p-4 text-center sm:flex sm:flex-wrap sm:justify-center'>
         {filteredMangas.map((m) => (
         <div className='flex flex-col justify-start items-center max-w-[180px] w-full relative overflow-hidden'>
-            <div className='w-full h-[250px]'>
+            <div className='w-full h-[250px]' onClick={() => toggleComment(m.id)}>
               <img
                 src={m.coverImage}
                 alt="Manga Cover"
                 className="w-full h-full object-cover rounded"
               />
+              {/* {activeCommentId === m.id && (
+                <div className='absolute z-50 bg-gray-800 text-white p-2 rounded shadow top-0 left-0 w-full h-full flex items-center justify-center'>
+                  <p className="text-xs">{m.comment || 'No comment available'}</p>
+                </div>
+              )} */}
             </div>
             <p className='font-[Inter] text-sm/5 text-white'>{m.name}</p>
             <p className='font-[Inter] text-black font-bold bg-white px-1 rounded-lg text-[10px] absolute top-1 right-1'>{m.completedChapters} / {m.totalChapters}</p>
