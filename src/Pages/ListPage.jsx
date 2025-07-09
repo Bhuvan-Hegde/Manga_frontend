@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../Service/supabaseClient';
 import { FaBook, FaCheckCircle, FaTrashAlt, FaRegClock } from 'react-icons/fa';
 import { MdEdit, MdDelete } from "react-icons/md";
+import { IoFilter, IoClose } from "react-icons/io5";
 
 
 const initialForm = {
@@ -26,6 +27,8 @@ export default function ListPage() {
   const [formData, setFormData] = useState(initialForm);
   const [imagePreview, setImagePreview] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showfilter, setShowFilter] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(null);
 
 
   const fetchMangas = async () => {
@@ -58,6 +61,10 @@ export default function ListPage() {
     setImagePreview(manga.coverImage);
     setShowForm(true);
   };
+
+  const openFilterMenu = () => {
+    setShowFilter(!showfilter);
+  }
 
   const handleImageUpload = async (file) => {
     if (!file) return null;
@@ -114,29 +121,35 @@ export default function ListPage() {
     fetchMangas();
   };
 
-const filteredMangas = mangas.filter((m) =>
-  m.name.toLowerCase().replace(/\s+/g, '').includes(
+const filteredMangas = mangas.filter((m) => {
+  const nameMatch = m.name.toLowerCase().replace(/\s+/g, '').includes(
     searchTerm.toLowerCase().replace(/\s+/g, '')
-  )
-);
+  );
+  const statusMatch = activeFilter ? m.status === activeFilter : true;
+  return nameMatch && statusMatch;
+});
 
 
 
   return (
-    <div className="p-6 w-[100vw] h-full min-h-screen bg-darkbg flex flex-col">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-6 w-[100vw] h-full min-h-screen bg-darkbg flex flex-col items-center relative">
+      <div className="flex justify-between items-center gap-3 sm:gap-10 mb-6">
         <h1 className="text-3xl font-bold text-green-600">Manga List</h1>
-        <button onClick={openCreateForm} className="bg-green-600 text-white px-4 py-1 font-bold text-xl rounded shadow hover:bg-green-700 transition">
+        <button onClick={openCreateForm} className="bg-green-600 text-white px-4 py-1 font-bold text-xl absolute top-4 right-4 rounded shadow hover:bg-green-700 transition">
           +
         </button>
       </div>
-      <input
+      <div className='flex text-white items-center gap-3'>
+        <input
         type="text"
         placeholder="Search manga..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 px-3 py-1 border border-white text-white rounded w-full max-w-xs"
+        className="mb-4 px-2 py-1 border border-white text-white rounded w-full max-w-xs"
       />
+      {showfilter ?(<IoClose onClick={openFilterMenu} className='text-2xl mb-4'/>) : (<IoFilter onClick={openFilterMenu} className='text-2xl mb-4'/>) }
+      </div>
+  
 
 
       {loading ? (
@@ -207,6 +220,25 @@ const filteredMangas = mangas.filter((m) =>
 
 
       )}
+  {showfilter && (
+  <div className='absolute bg-white text-black top-[150px] py-2 px-4 text-center rounded-md cursor-pointer shadow-md z-10'>
+    <ul className="space-y-2">
+      {['All', 'To_Read', 'Reading', 'Completed'].map((status) => (
+        <li
+          key={status}
+          onClick={() => {
+            setActiveFilter(status === 'All' ? null : status);
+            setShowFilter(false);
+          }}
+          className={`hover:font-bold ${activeFilter === status ? 'underline' : ''}`}
+        >
+          {status.replace('_', ' ')}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
 
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
