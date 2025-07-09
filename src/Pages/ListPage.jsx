@@ -25,6 +25,8 @@ export default function ListPage() {
   const [isEdit, setIsEdit] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [imagePreview, setImagePreview] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   const fetchMangas = async () => {
     try {
@@ -112,6 +114,14 @@ export default function ListPage() {
     fetchMangas();
   };
 
+const filteredMangas = mangas.filter((m) =>
+  m.name.toLowerCase().replace(/\s+/g, '').includes(
+    searchTerm.toLowerCase().replace(/\s+/g, '')
+  )
+);
+
+
+
   return (
     <div className="p-6 w-[100vw] h-full min-h-screen bg-darkbg flex flex-col">
       <div className="flex justify-between items-center mb-6">
@@ -120,12 +130,20 @@ export default function ListPage() {
           +
         </button>
       </div>
+      <input
+        type="text"
+        placeholder="Search manga..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4 px-3 py-1 border border-white text-white rounded w-full max-w-xs"
+      />
+
 
       {loading ? (
         <p>Loading...</p>
       ) : (
       <div className='grid grid-cols-2 gap-3 p-4 text-center sm:flex sm:flex-wrap sm:justify-center'>
-        {mangas.map((m) => (
+        {filteredMangas.map((m) => (
         <div className='flex flex-col justify-start items-center max-w-[180px] w-full relative overflow-hidden'>
             <div className='w-full h-[250px]'>
               <img
