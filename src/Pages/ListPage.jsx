@@ -113,11 +113,11 @@ export default function ListPage() {
   };
 
   return (
-    <div className="p-6 w-[100vw] h-full min-h-screen bg-gray-50 flex flex-col">
+    <div className="p-6 w-[100vw] h-full min-h-screen bg-darkbg flex flex-col">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Manga List</h1>
-        <button onClick={openCreateForm} className="bg-green-600 text-white px-5 py-2 rounded shadow hover:bg-green-700 transition">
-          + Add Manga
+        <h1 className="text-3xl font-bold text-green-600">Manga List</h1>
+        <button onClick={openCreateForm} className="bg-green-600 text-white px-4 py-1 font-bold text-xl rounded shadow hover:bg-green-700 transition">
+          +
         </button>
       </div>
 
@@ -126,7 +126,7 @@ export default function ListPage() {
       ) : (
       <div className='grid grid-cols-2 gap-3 p-4 text-center sm:flex sm:flex-wrap sm:justify-center'>
         {mangas.map((m) => (
-        <div className='flex flex-col justify-start items-center max-w-[180px] w-full relative'>
+        <div className='flex flex-col justify-start items-center max-w-[180px] w-full relative overflow-hidden'>
             <div className='w-full h-[250px]'>
               <img
                 src={m.coverImage}
@@ -134,7 +134,7 @@ export default function ListPage() {
                 className="w-full h-full object-cover rounded"
               />
             </div>
-            <p className='font-[Inter] text-sm/5 text-gray-900'>{m.name}</p>
+            <p className='font-[Inter] text-sm/5 text-white'>{m.name}</p>
             <p className='font-[Inter] text-black font-bold bg-white px-1 rounded-lg text-[10px] absolute top-1 right-1'>{m.completedChapters} / {m.totalChapters}</p>
             <p className='absolute text-black font-bold text-[9px] p-[2px] px-[4px] left-1 rounded-lg bg-white top-1'>{m.releaseStatus}</p>
             <div className="text-[13px] flex gap-1 items-center bg-white absolute top-[200px] sm:top-[225px] right-[-9px] px-1 pr-3 rounded-md">
@@ -192,31 +192,31 @@ export default function ListPage() {
 
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 max-h-[90%] rounded-xl w-[95%] max-w-md shadow-lg relative">
-            <button onClick={() => setShowForm(false)} className="absolute top-2 right-3 text-2xl text-gray-600 hover:text-black">×</button>
+          <div className="bg-darkbg p-6 max-h-[90%] rounded-xl text-white w-[95%] max-w-md shadow-lg relative">
+            <button onClick={() => setShowForm(false)} className="absolute top-2 right-3 text-2xl text-white hover:text-black">×</button>
             <h2 className="text-2xl font-bold mb-4 text-center">{isEdit ? 'Edit Manga' : 'Create Manga'}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block font-medium">Name</label>
-                <input type="text" className="w-full border rounded p-2" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+                <input type="text" className="w-full border rounded p-2 bg-darkbg" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
               </div>
               <div className="flex gap-2">
                 <div className="flex-1">
                   <label className="block font-medium">Total Chapters</label>
-                  <input type="number" className="w-full border rounded p-2" value={formData.totalChapters} onChange={(e) => setFormData({ ...formData, totalChapters: parseInt(e.target.value) })} required />
+                  <input type="number" className="w-full border rounded p-2 bg-darkbg" value={formData.totalChapters} onChange={(e) => setFormData({ ...formData, totalChapters: parseInt(e.target.value) })} required />
                 </div>
                 <div className="flex-1">
                   <label className="block font-medium">Completed</label>
-                  <input type="number" className="w-full border rounded p-2" value={formData.completedChapters} onChange={(e) => setFormData({ ...formData, completedChapters: parseInt(e.target.value) })} required />
+                  <input type="number" className="w-full border rounded p-2 bg-darkbg" value={formData.completedChapters} onChange={(e) => setFormData({ ...formData, completedChapters: parseInt(e.target.value) })} required />
                 </div>
               </div>
               <div>
                 <label className="block font-medium">Comment</label>
-                <textarea className="w-full border rounded p-2" value={formData.comment} onChange={(e) => setFormData({ ...formData, comment: e.target.value })} />
+                <textarea className="w-full border rounded p-2 bg-darkbg" value={formData.comment} onChange={(e) => setFormData({ ...formData, comment: e.target.value })} />
               </div>
               <div>
                 <label className="block font-medium">Status</label>
-                <select className="w-full border rounded p-2" value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })}>
+                <select className="w-full border rounded p-2 bg-darkbg" value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })}>
                   <option value="To_Read">To_Read</option>
                   <option value="Reading">Reading</option>
                   <option value="Completed">Completed</option>
@@ -224,7 +224,7 @@ export default function ListPage() {
               </div>
               <div>
                 <label className="block font-medium">Release Status</label>
-                <select className="w-full border rounded p-2" value={formData.releaseStatus} onChange={(e) => setFormData({ ...formData, releaseStatus: e.target.value })}>
+                <select className="w-full border rounded p-2 bg-darkbg" value={formData.releaseStatus} onChange={(e) => setFormData({ ...formData, releaseStatus: e.target.value })}>
                   <option value="ONGOING">ONGOING</option>
                   <option value="FINISHED">FINISHED</option>
                 </select>
@@ -245,7 +245,7 @@ export default function ListPage() {
 
           
               
-              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+              <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-blue-700 transition">
                 {isEdit ? 'Update' : 'Create'}
               </button>
             </form>
