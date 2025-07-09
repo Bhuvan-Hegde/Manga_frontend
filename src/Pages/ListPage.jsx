@@ -160,7 +160,7 @@ const toggleComment = (id) => {
       <div className='grid grid-cols-2 gap-3 p-4 text-center sm:flex sm:flex-wrap sm:justify-center'>
         {filteredMangas.map((m) => (
         <div className='flex flex-col justify-start items-center max-w-[180px] w-full relative overflow-hidden'>
-            <div className='w-full h-[250px]' onClick={() => toggleComment(m.id)}>
+            <div className='w-full h-[200px] sm:h-[250px]' onClick={() => toggleComment(m.id)}>
               <img
                 src={m.coverImage}
                 alt="Manga Cover"
@@ -175,7 +175,7 @@ const toggleComment = (id) => {
             <p className='font-[Inter] text-sm/5 text-white'>{m.name}</p>
             <p className='font-[Inter] text-black font-bold bg-white px-1 rounded-lg text-[10px] absolute top-1 right-1'>{m.completedChapters} / {m.totalChapters}</p>
             <p className='absolute text-black font-bold text-[9px] p-[2px] px-[4px] left-1 rounded-lg bg-white top-1'>{m.releaseStatus}</p>
-            <div className="text-[13px] flex gap-1 items-center bg-white absolute top-[200px] sm:top-[225px] right-[-9px] px-1 pr-3 rounded-md">
+            <div className="text-[13px] flex gap-1 items-center bg-white absolute top-[150px] sm:top-[225px] right-[-9px] px-1 pr-3 rounded-md">
               {m.status === 'Reading' && (
                 <>
                   <FaBook className="text-blue-500" />
@@ -202,7 +202,7 @@ const toggleComment = (id) => {
               )}
             </div>
           
-          <div className="mt-3 flex gap-1 absolute top-[207px] left-1">
+          <div className="mt-3 flex gap-1 absolute top-[155px] sm:top-[207px] right-1 sm:left-1">
               <button
                 onClick={() => handleDelete(m.id)}
                 className="bg-white rounded-xl p-[5px] text-[15px]"
